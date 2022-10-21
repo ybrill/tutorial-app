@@ -5,7 +5,7 @@ name: default
 
 trigger:
   branch:
-  - main
+  - master
 
 steps:
 - name: publish
@@ -13,7 +13,7 @@ steps:
   settings:
     create_repository: true
     registry: 795250896452.dkr.ecr.us-east-1.amazonaws.com
-    repo: <NAMESPACE>/${DRONE_REPO_NAME}
+    repo: devprod-platform/${DRONE_REPO_NAME}
     tags:
     - git-${DRONE_COMMIT_SHA:0:7}
     - latest
@@ -31,8 +31,8 @@ steps:
     chart: mongodb/web-app
     chart_version: 4.12.0
     add_repos: [mongodb=https://10gen.github.io/helm-charts]
-    namespace: <NAMESPACE>
-    release: <APP>
+    namespace: devprod-platform
+    release: tutorial-app
     values: image.tag=git-${DRONE_COMMIT_SHA:0:7},image.repository=795250896452.dkr.ecr.us-east-1.amazonaws.com/<NAMESPACE>/${DRONE_REPO_NAME},ingress.enabled=true,ingress.hosts[0]=<APP>.<NAMESPACE>.staging.corp.mongodb.com
     api_server: https://api.staging.corp.mongodb.com
     kubernetes_token:
